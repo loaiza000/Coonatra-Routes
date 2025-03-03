@@ -2,6 +2,9 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import { connectDb } from "./database.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 connectDb();
 
 import paisRoutes from "./routes/pais.routes.js";
@@ -15,7 +18,7 @@ import userRoutes from "./routes/user.routes.js";
 
 const app = express();
 
-app.set("Port", 4000);
+app.set("Port", process.env.PORT);
 app.use(morgan("dev"));
 app.use(cors({ origin: "*" }));
 app.use(express.urlencoded({ extended: true }));
@@ -33,4 +36,3 @@ app.use("/users", userRoutes);
 app.listen(app.get("Port"), () => {
   console.log("Escuchando por el puerto", app.get("Port"));
 });
-
